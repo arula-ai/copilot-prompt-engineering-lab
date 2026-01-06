@@ -1,8 +1,8 @@
 # GenAI DevAssist | Prompt Engineering
-## Participant Guide v1.0
+## Participant Guide v2.0
 
-**Version:** 1.0  
-**Duration:** 75 minutes  
+**Version:** 2.0
+**Duration:** 75 minutes
 **Fidelity DevAssist Program**
 
 ---
@@ -10,12 +10,14 @@
 ## Table of Contents
 
 1. [Workshop Overview](#workshop-overview)
-2. [The CRAFT Framework](#the-craft-framework)
-3. [Lab 1: Crafting Effective Prompts](#lab-1-crafting-effective-prompts)
-4. [Lab 2: Applying Library Patterns](#lab-2-applying-library-patterns)
-5. [Lab 3: Contributing to the Library](#lab-3-contributing-to-the-library)
-6. [Quick Reference Guide](#quick-reference-guide)
-7. [Homework](#homework)
+2. [Getting Started](#getting-started)
+3. [Copilot Chat Modes](#copilot-chat-modes)
+4. [The CRAFT Framework](#the-craft-framework)
+5. [Lab 1: Crafting Effective Prompts](#lab-1-crafting-effective-prompts)
+6. [Lab 2: Applying Library Patterns](#lab-2-applying-library-patterns)
+7. [Lab 3: Contributing to the Library](#lab-3-contributing-to-the-library)
+8. [Quick Reference Guide](#quick-reference-guide)
+9. [Homework](#homework)
 
 ---
 
@@ -25,18 +27,119 @@
 
 By completing this workshop, you will be able to:
 
-1. **Compose** clear, specific prompts that generate high-quality code
-2. **Apply** Fidelity's Copilot prompt library patterns
-3. **Evaluate** prompt effectiveness using a quality rubric
-4. **Contribute** to the shared prompt library
+1. **Compose** clear, specific prompts that generate high-quality code using the CRAFT framework
+2. **Apply** prompt library patterns for consistent, production-ready output
+3. **Evaluate** prompt effectiveness using Copilot's Need Review Mode
+4. **Contribute** reusable patterns to the shared prompt library
 
 ### Success Metrics
 
 | Metric | Target |
 |--------|--------|
-| First-attempt success rate | >70% |
-| Prompt specificity score | >8/10 |
-| Library pattern usage | >80% |
+| Challenge quality ratings | ≥9/10 |
+| Library pattern success | ≥80% |
+| Pattern contribution | 5+ test runs at ≥80% success |
+
+### Choose Your Track
+
+This workshop supports two language tracks:
+
+| Track | Folder | Action Guide |
+|-------|--------|--------------|
+| **Angular/TypeScript** | `angular/` | `angular/LAB_ACTION_GUIDE.md` |
+| **Java 17** | `java/` | `java/LAB_ACTION_GUIDE.md` |
+
+**Your Track:** ☐ Angular/TypeScript  ☐ Java 17
+
+---
+
+## Getting Started
+
+### Step 1: Environment Setup
+
+**Angular Track:**
+```bash
+cd angular
+npm install
+npm run build
+```
+
+**Java Track:**
+```bash
+cd java
+mvn clean compile
+mvn test
+```
+
+### Step 2: Verify Copilot
+
+- Check the Copilot icon in your IDE status bar (should be active)
+- Open Copilot Chat panel
+- Test with: "Hello, what can you help me with?"
+
+### Step 3: Open Your Action Guide
+
+Open the LAB_ACTION_GUIDE.md for your track—it contains step-by-step instructions using Copilot Chat modes.
+
+### Step 4: Initialize Progress Tracker
+
+Open `docs/workflow-tracker.md` and fill in:
+- Your name
+- Language track
+- Start time
+
+---
+
+## Copilot Chat Modes
+
+This lab uses different Copilot Chat modes for different tasks. Switch modes based on what you need to accomplish.
+
+### Agent Mode
+**Use for:** Executing tasks, running commands, generating code
+
+```
+Agent Mode: Write your CRAFT prompt in the challenge file, then use Copilot to generate the implementation
+Agent Mode: #runInTerminal npm run build
+```
+
+### Planning Mode
+**Use for:** Reviewing files, planning approach, analyzing problems
+
+```
+Planning Mode: Review #challenge1-login.ts and identify what makes "Create a login function" insufficient
+Planning Mode: Reference #guide.md to plan your CRAFT prompt
+```
+
+### Need Review Mode
+**Use for:** Comparing output against solutions, rating quality
+
+```
+Need Review Mode: Compare my generated code against #challenge1-login-solution.md
+Need Review Mode: Rate my output quality and provide feedback
+```
+
+### Testing Mode
+**Use for:** Running builds and tests, validating output
+
+```
+Testing Mode: #runInTerminal npm run test
+Testing Mode: #runInTerminal mvn test
+```
+
+### Hand-Off Mode
+**Use for:** Documenting progress after each stage
+
+```
+Hand-Off: Summarize Stage 1 progress and append to #workflow-tracker.md
+```
+
+### File References
+
+Use `#filename` to reference files as chat variables:
+- `#challenge1-login.ts` - Challenge file
+- `#challenge1-login-solution.md` - Solution file
+- `#api-service-method.md` - Library pattern
+- `#workflow-tracker.md` - Progress tracker
 
 ---
 
@@ -47,78 +150,93 @@ Use this framework for every prompt you write.
 ### C - Context
 **What is the situation?**
 
-Include:
-- Application type and framework
-- Existing patterns to follow
-- Relevant dependencies
-- Technical constraints
+| Include | Example |
+|---------|---------|
+| Framework & version | Angular 17, Spring Boot 3 |
+| App type & domain | Financial services, trading |
+| Existing patterns | JWT auth, RxJS, BigDecimal |
+| Dependencies | HttpClient, RestClient |
 
-**Example:**
+**TypeScript Example:**
 ```
-Context: Angular 16 application with NgRx state management,
-using reactive forms and our standard service patterns.
+Context:
+- Angular 17 financial services application
+- JWT authentication with refresh tokens
+- HttpClient for API calls, RxJS for async handling
+- Must integrate with existing AuthService and TokenStorage
+```
+
+**Java Example:**
+```
+Context:
+- Spring Boot 3 financial services application
+- JWT authentication with Spring Security
+- Uses RestClient for API calls
+- Must integrate with existing UserRepository and JwtTokenService
 ```
 
 ### R - Role
 **Who should Copilot act as?**
 
-Include:
-- Expertise level (senior, specialist)
-- Domain knowledge (security, performance, testing)
-- Perspective (reviewer, implementer)
+| Include | Example |
+|---------|---------|
+| Expertise level | Senior, specialist |
+| Domain knowledge | Security, performance, testing |
+| Framework expertise | Angular, Spring Boot |
 
 **Example:**
 ```
-Acting as a senior TypeScript developer with expertise in 
-financial calculations and regulatory compliance...
+Role: Senior Angular developer with security expertise in financial applications.
 ```
 
 ### A - Action
 **What exactly should happen?**
 
-Include:
-- Specific task to perform
-- Numbered requirements
-- Success criteria
+Always use **numbered requirements**:
 
-**Example:**
 ```
-Create a service method that:
-1. Accepts userId and date range
-2. Fetches transactions from API
-3. Aggregates by category
-4. Returns summary with totals
+Action: Create a login method that:
+1. Accepts LoginRequest (email: string, password: string, rememberMe?: boolean)
+2. Validates inputs client-side before API call
+3. POST to /api/auth/login with credentials
+4. On success: store access token in memory, refresh token per rememberMe
+5. On 401: return typed AuthError with user-friendly message
+6. On 429: return rate limit error with retry-after time
+7. Emit auth state change via BehaviorSubject
+8. Log attempt (success/failure) without sensitive data
 ```
 
 ### F - Format
 **How should output look?**
 
-Include:
-- Language/syntax requirements
-- Documentation requirements
-- Structure expectations
-
-**Example:**
+**TypeScript:**
 ```
-Format: TypeScript with strict types
-Include JSDoc comments for all public methods
-Follow Angular style guide conventions
+Format: TypeScript with:
+- Full types (LoginRequest, LoginResponse, AuthError)
+- Observable<Result<AuthUser, AuthError>> return type
+- JSDoc with @example
+- inject() for dependencies
+```
+
+**Java:**
+```
+Format: Java 17+ with:
+- Record types for DTOs
+- Sealed interface for error types
+- Javadoc with @param, @return, @throws
+- @Service annotation
 ```
 
 ### T - Tone/Constraints
 **What rules must be followed?**
 
-Include:
-- Things to avoid
-- Performance requirements
-- Compatibility needs
-
-**Example:**
 ```
 Constraints:
-- No external dependencies
-- Must handle null inputs
-- Maximum 50 lines per method
+- Never log passwords or tokens
+- Clear sensitive data from memory on failure
+- Rate limit awareness (don't retry immediately on 429)
+- Must handle null inputs without throwing
+- Follow OWASP authentication guidelines
 ```
 
 ---
@@ -126,22 +244,42 @@ Constraints:
 ## Lab 1: Crafting Effective Prompts
 
 ### Objective
-Transform 5 vague prompts into effective ones using CRAFT.
+Transform 5 vague prompts into expert prompts using CRAFT.
 
-**Duration:** 13 minutes
+**Duration:** 25 minutes (5 min per challenge)
 
-### The Bad Prompts
+**Location:**
+- Angular: `angular/src/challenges/lab1-basic/`
+- Java: `java/src/main/java/.../challenges/lab1/`
 
-Transform each of these:
+### Workflow for Each Challenge
+
+1. **Planning Mode:** Review the challenge file and identify gaps in the bad prompt
+2. **Planning Mode:** Plan your CRAFT prompt using the framework
+3. **Agent Mode:** Write your prompt and generate code with Copilot
+4. **Need Review Mode:** Compare against the solution file and rate quality
+5. **Hand-Off:** Record your rating and key learnings
 
 ---
 
-### Prompt 1: "Create a login function"
+### Challenge 1: Login Function
 
-**Your CRAFT Transformation:**
+**Bad Prompt:** `"Create a login function"`
+
+**Planning Mode:** Open your challenge file and identify what's missing:
+- ☐ No framework/version specified
+- ☐ No auth mechanism details
+- ☐ No error handling requirements
+- ☐ No security constraints
+- ☐ No return type specified
+
+**Your CRAFT Prompt:**
 
 **Context:**
 ```
+
+
+
 
 ```
 
@@ -152,7 +290,55 @@ Transform each of these:
 
 **Action:**
 ```
+1.
+2.
+3.
+4.
+5.
+```
 
+**Format:**
+```
+
+
+```
+
+**Constraints:**
+```
+
+
+```
+
+**Agent Mode:** Generate code → **Need Review Mode:** Compare with `#challenge1-login-solution.md`
+
+**Quality Rating:** ___/10  **Target:** 9/10
+
+---
+
+### Challenge 2: Test Generation
+
+**Bad Prompt:** `"Write tests for this"`
+
+**Your CRAFT Prompt:**
+
+**Context:**
+```
+
+
+
+```
+
+**Role:**
+```
+
+```
+
+**Action:**
+```
+1. Happy path tests:
+2. Edge cases:
+3. Boundary values:
+4. Invalid inputs:
 ```
 
 **Format:**
@@ -165,24 +351,25 @@ Transform each of these:
 
 ```
 
-**Complete Prompt:**
-```
-
-
-
-
-```
-
-**Copilot Output Quality (1-10):** ___
+**Quality Rating:** ___/10  **Target:** 9/10
 
 ---
 
-### Prompt 2: "Write tests for this"
+### Challenge 3: Bug Fix
 
-**Your CRAFT Transformation:**
+**Bad Prompt:** `"Fix the bug"`
+
+**Planning Mode:** Identify all bugs in the code:
+- ☐ Bug 1: ________________________________
+- ☐ Bug 2: ________________________________
+- ☐ Bug 3: ________________________________
+- ☐ Bug 4: ________________________________
+
+**Your CRAFT Prompt:**
 
 **Context:**
 ```
+
 
 ```
 
@@ -191,9 +378,12 @@ Transform each of these:
 
 ```
 
-**Action:**
+**Action:** (List each bug with expected fix)
 ```
-
+1. BUG: _____________ → FIX: _____________
+2. BUG: _____________ → FIX: _____________
+3. BUG: _____________ → FIX: _____________
+4. BUG: _____________ → FIX: _____________
 ```
 
 **Format:**
@@ -206,24 +396,29 @@ Transform each of these:
 
 ```
 
-**Complete Prompt:**
-```
-
-
-
-
-```
-
-**Copilot Output Quality (1-10):** ___
+**Quality Rating:** ___/10  **Target:** 9/10
 
 ---
 
-### Prompt 3: "Fix the bug"
+### Challenge 4: Error Handling
 
-**Your CRAFT Transformation:**
+**Bad Prompt:** `"Add error handling"`
+
+**Planning Mode:** Catalog all error scenarios:
+- ☐ HTTP 400 (validation)
+- ☐ HTTP 401 (authentication)
+- ☐ HTTP 403 (authorization)
+- ☐ HTTP 404 (not found)
+- ☐ HTTP 429 (rate limit)
+- ☐ HTTP 500+ (server error)
+- ☐ Network timeout
+- ☐ Connection failure
+
+**Your CRAFT Prompt:**
 
 **Context:**
 ```
+
 
 ```
 
@@ -234,7 +429,16 @@ Transform each of these:
 
 **Action:**
 ```
-
+1. Input validation:
+2. HTTP error handling:
+   - 400:
+   - 401:
+   - 404:
+   - 429:
+   - 500+:
+3. Network error handling:
+4. Retry strategy:
+5. Logging:
 ```
 
 **Format:**
@@ -247,24 +451,24 @@ Transform each of these:
 
 ```
 
-**Complete Prompt:**
-```
-
-
-
-
-```
-
-**Copilot Output Quality (1-10):** ___
+**Quality Rating:** ___/10  **Target:** 9.5/10
 
 ---
 
-### Prompt 4: "Add error handling"
+### Challenge 5: Code Optimization
 
-**Your CRAFT Transformation:**
+**Bad Prompt:** `"Optimize this code"`
+
+**Planning Mode:** Analyze the current implementation:
+- Current complexity: O(_____)
+- Target complexity: O(_____)
+- Optimization technique: ________________________________
+
+**Your CRAFT Prompt:**
 
 **Context:**
 ```
+
 
 ```
 
@@ -275,7 +479,11 @@ Transform each of these:
 
 **Action:**
 ```
-
+1. Time complexity: Reduce from O(___) to O(___)
+   - Technique:
+2. Memory efficiency:
+3. Readability:
+4. Maintainability:
 ```
 
 **Format:**
@@ -288,201 +496,126 @@ Transform each of these:
 
 ```
 
-**Complete Prompt:**
-```
-
-
-
-
-```
-
-**Copilot Output Quality (1-10):** ___
+**Quality Rating:** ___/10  **Target:** 9/10
 
 ---
 
-### Prompt 5: "Optimize this code"
+### Lab 1 Summary
 
-**Your CRAFT Transformation:**
+**Hand-Off Mode:** Document your Stage 1 progress
 
-**Context:**
+| Challenge | Bad Prompt | Your Rating | Target | Key Improvement |
+|-----------|------------|-------------|--------|-----------------|
+| 1. Login | "Create login" | ___/10 | 9/10 | |
+| 2. Tests | "Write tests" | ___/10 | 9/10 | |
+| 3. Bug Fix | "Fix bug" | ___/10 | 9/10 | |
+| 4. Errors | "Add errors" | ___/10 | 9.5/10 | |
+| 5. Optimize | "Optimize" | ___/10 | 9/10 | |
+
+**Average Quality:** ___/10
+
+**Most Impactful CRAFT Element:** ☐ Context  ☐ Role  ☐ Action  ☐ Format  ☐ Constraints
+
+**Key Insight:**
 ```
 
 ```
-
-**Role:**
-```
-
-```
-
-**Action:**
-```
-
-```
-
-**Format:**
-```
-
-```
-
-**Constraints:**
-```
-
-```
-
-**Complete Prompt:**
-```
-
-
-
-
-```
-
-**Copilot Output Quality (1-10):** ___
-
----
-
-### Lab 1 Self-Assessment
-
-| Prompt | Clarity | Completeness | Specificity | Output | Total |
-|--------|---------|--------------|-------------|--------|-------|
-| 1 | /10 | /10 | /10 | /10 | /40 |
-| 2 | /10 | /10 | /10 | /10 | /40 |
-| 3 | /10 | /10 | /10 | /10 | /40 |
-| 4 | /10 | /10 | /10 | /10 | /40 |
-| 5 | /10 | /10 | /10 | /10 | /40 |
-
-**Average Output Quality:** ___ /10
 
 ---
 
 ## Lab 2: Applying Library Patterns
 
 ### Objective
-Use Fidelity prompt library patterns to generate production-ready code.
+Use prompt library patterns to generate production-ready code.
 
 **Duration:** 15 minutes
 
-### Task 1: API Service Method (5 min)
+**Pattern Location:** `prompt-library/`
 
-**Pattern Location:** `prompt-library/code-generation/api-service-method.md`
+### Workflow
 
-**Your Task:** Create a portfolio balance retrieval service
-
-**Fill in the Template:**
-
-```
-Create a Portfolio service method in TypeScript that:
-
-Context:
-- Application: ________________________________
-- Existing patterns: ________________________________
-- Dependencies: ________________________________
-
-Method Requirements:
-- Name: ________________________________
-- Accepts: ________________________________
-- Returns: ________________________________
-
-Features to include:
-1. ________________________________
-2. ________________________________
-3. ________________________________
-
-Error handling:
-- ________________________________
-- ________________________________
-
-Format: ________________________________
-Constraints: ________________________________
-```
-
-**Copilot Output Quality (1-10):** ___
+1. **Planning Mode:** Review challenge file and identify issues
+2. **Planning Mode:** Open library pattern and plan variable substitution
+3. **Agent Mode:** Apply customized pattern in Copilot
+4. **Need Review Mode:** Verify output meets pattern criteria
+5. **Hand-Off:** Record pattern effectiveness
 
 ---
 
-### Task 2: Unit Test Suite (5 min)
+### Task 1: API Service Method (5 min)
 
-**Pattern Location:** `prompt-library/testing/unit-test-suite.md`
+**Pattern:** `#api-service-method.md`
 
-**Your Task:** Generate tests for the service method you created
+**Challenge File:**
+- Angular: `#portfolio-service.ts`
+- Java: `#PortfolioServiceChallenge.java`
 
-**Fill in the Template:**
+**Fill in the Variables:**
 
-```
-Generate a comprehensive Jest test suite for [your service method]:
+| Variable | Your Value |
+|----------|------------|
+| `[service-name]` | PortfolioService |
+| `[method-name]` | getPortfolioById |
+| `[endpoint]` | GET /api/portfolios/{id} |
+| `[return-type]` | |
+| `[caching]` | |
+| `[retry]` | |
+| `[errors]` | |
 
-Code to test:
-[paste your service method signature]
+**Quality Rating:** ___/10
 
-Test framework: Jest with TypeScript
+---
 
-Required test categories:
-1. Happy path - ________________________________
-2. Edge cases - ________________________________
-3. Error scenarios - ________________________________
-4. Boundary values - ________________________________
+### Task 2: Test Generation (5 min)
 
-Assertions should verify:
-- ________________________________
-- ________________________________
-- ________________________________
+**Pattern:** `#unit-test-suite.md`
 
-Format: describe/it blocks with clear descriptions
-Constraints: Independent tests, single responsibility
-```
+**Variables to Fill:**
 
-**Copilot Output Quality (1-10):** ___
+| Variable | Your Value |
+|----------|------------|
+| `[function-name]` | |
+| `[test-framework]` | Jest / JUnit 5 |
+| `[happy-path-tests]` | |
+| `[edge-cases]` | |
+| `[error-scenarios]` | |
+
+**Quality Rating:** ___/10
 
 ---
 
 ### Task 3: Input Validation (5 min)
 
-**Pattern Location:** `prompt-library/security/input-validation.md`
+**Pattern:** `#input-validation.md`
 
-**Your Task:** Create validation for your service's input
+**Variables to Fill:**
 
-**Fill in the Template:**
+| Variable | Your Value |
+|----------|------------|
+| `[input-type]` | |
+| `[field-1]` | |
+| `[field-2]` | |
+| `[security-concern-1]` | |
+| `[security-concern-2]` | |
 
-```
-Create an input validation function for [your input type]:
-
-Input structure:
-________________________________
-
-Validation rules:
-1. ________________________________
-2. ________________________________
-3. ________________________________
-
-Security considerations:
-- ________________________________
-- ________________________________
-
-Return format:
-- Success: { valid: true, data: [sanitized-input] }
-- Failure: { valid: false, errors: [array-of-error-messages] }
-
-Constraints:
-- Must sanitize all string inputs
-- Must not throw exceptions
-- Must provide specific error messages
-```
-
-**Copilot Output Quality (1-10):** ___
+**Quality Rating:** ___/10
 
 ---
 
 ### Lab 2 Summary
 
-| Task | Pattern Used | Output Quality |
-|------|--------------|----------------|
-| 1. API Service | api-service-method.md | /10 |
-| 2. Test Suite | unit-test-suite.md | /10 |
-| 3. Validation | input-validation.md | /10 |
+**Hand-Off Mode:** Document your Stage 2 progress
 
-**Key Learning:** What made the library patterns effective?
+| Task | Pattern Used | Quality |
+|------|--------------|---------|
+| 1. API Service | api-service-method.md | ___/10 |
+| 2. Test Suite | unit-test-suite.md | ___/10 |
+| 3. Validation | input-validation.md | ___/10 |
+
+**Average Quality:** ___/10
+
+**What made library patterns effective?**
 ```
-
 
 ```
 
@@ -491,101 +624,100 @@ Constraints:
 ## Lab 3: Contributing to the Library
 
 ### Objective
-Create a library-quality prompt and prepare for contribution.
+Create a library-quality prompt pattern and test for consistency.
 
 **Duration:** 10 minutes
 
-### Step 1: Identify Your Best Prompt
+### Step 1: Identify Your Pattern
 
-From your work today or previous experience, identify a prompt that:
-- Works consistently (same quality output each time)
-- Solves a common problem
-- Would benefit other developers
+From Labs 1-2, identify a prompt approach that worked well:
 
-**Prompt Topic:** ________________________________
+**Pattern Name:** ________________________________
+
+**Category:** ☐ Code Generation  ☐ Testing  ☐ Refactoring  ☐ Documentation  ☐ Security
+
+**Problem it Solves:** ________________________________
 
 ---
 
-### Step 2: Format Using Template
+### Step 2: Create the Pattern Template
 
 ```markdown
-## Pattern: [Your Pattern Name]
+# Pattern: [Your Pattern Name]
 
-**Category:** [Code Generation/Testing/Refactoring/Documentation/Security]
-**Language:** [TypeScript/Java/Python/etc.]
+**Category:** [Category]
+**Language:** [TypeScript / Java]
+**Success Rate:** ___%
+**Last Verified:** [Date]
 
-### Prompt Template
-
-```
-[Your complete prompt with [variables] marked]
-```
-
-### Variables
+## Variables
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| [var-1] | | |
-| [var-2] | | |
-| [var-3] | | |
+| `[var-1]` | | |
+| `[var-2]` | | |
+| `[var-3]` | | |
 
-### Example Usage
+## Prompt Template
+
+```
+[Your template with [variables] marked]
+```
+
+## Example Usage
 
 ```
 [A completely filled-in example]
 ```
 
-### Expected Output Quality: ___/10
+## Expected Output Quality: ___/10
 
-### Test Results
+## Common Pitfalls
 
-| Run | Result | Notes |
-|-----|--------|-------|
-| 1 | Pass/Fail | |
-| 2 | Pass/Fail | |
-| 3 | Pass/Fail | |
-
-### Edge Cases Discovered
-
-1. ________________________________
-2. ________________________________
-
-### Author
-**Name:** ________________________________
-**Date:** ________________________________
+| Pitfall | Solution |
+|---------|----------|
+| | |
+| | |
 ```
 
 ---
 
-### Step 3: Test for Consistency
+### Step 3: Test for Consistency (5 runs)
 
-Run your prompt 3 times and record results:
+**Agent Mode:** Run your pattern 5 times with different inputs
 
-**Run 1:**
-- Output usable? Yes / No
-- Quality rating: ___/10
-- Notes: ________________________________
+| Run | Input Scenario | Quality | Pass/Fail |
+|-----|----------------|---------|-----------|
+| 1 | | ___/10 | ☐ |
+| 2 | | ___/10 | ☐ |
+| 3 | | ___/10 | ☐ |
+| 4 | | ___/10 | ☐ |
+| 5 | | ___/10 | ☐ |
 
-**Run 2:**
-- Output usable? Yes / No
-- Quality rating: ___/10
-- Notes: ________________________________
-
-**Run 3:**
-- Output usable? Yes / No
-- Quality rating: ___/10
-- Notes: ________________________________
-
-**Consistency Score:** ___/10 (How similar were the outputs?)
+**Success Rate:** ___/5 = ___%  **(Target: ≥80%)**
 
 ---
 
-### Step 4: Document Edge Cases
+### Step 4: Submit Contribution
 
-What edge cases or gotchas did you discover?
+If success rate ≥80%:
 
-1. ________________________________
-2. ________________________________
-3. ________________________________
+**Agent Mode:** Save pattern to `prompt-library/[category]/[pattern-name].md`
+
+**Contribution Status:** ☐ Not Ready  ☐ Ready  ☐ Submitted
+
+---
+
+### Lab 3 Summary
+
+**Hand-Off Mode:** Document your Stage 3 progress
+
+| Field | Value |
+|-------|-------|
+| Pattern Name | |
+| Category | |
+| Success Rate | % |
+| File Location | |
 
 ---
 
@@ -593,43 +725,43 @@ What edge cases or gotchas did you discover?
 
 ### CRAFT Checklist
 
-Before submitting any prompt, verify:
+Before generating code, verify your prompt has:
 
-- [ ] **Context** included (app type, framework, patterns)
-- [ ] **Role** specified (expertise, domain)
-- [ ] **Action** is specific (numbered requirements)
-- [ ] **Format** defined (language, docs, structure)
-- [ ] **Tone/Constraints** added (rules, limitations)
+- [ ] **Context:** Framework, version, dependencies, domain
+- [ ] **Role:** Expertise level, domain knowledge
+- [ ] **Action:** Numbered requirements, specific steps
+- [ ] **Format:** Types, patterns, documentation style
+- [ ] **Constraints:** Rules, security, performance
 
-### Quality Rubric Quick Reference
+### Quality Rating Scale
 
-| Score | Meaning |
-|-------|---------|
-| 1-3 | Needs complete rewrite |
-| 4-5 | Needs significant work |
-| 6-7 | Good, needs refinement |
-| 8-9 | Very good, minor polish |
-| 10 | Excellent, library-ready |
+| Score | Description |
+|-------|-------------|
+| 9-10 | Expert-level, production-ready |
+| 7-8 | Good quality, minor improvements needed |
+| 5-6 | Acceptable, several gaps to address |
+| 3-4 | Needs significant improvement |
+| 1-2 | Does not meet requirements |
 
 ### Common Prompt Improvements
 
 | Problem | Solution |
 |---------|----------|
-| Generic output | Add more context |
-| Wrong style | Specify format |
-| Missing features | Use numbered action list |
-| Insecure code | Add security constraints |
-| Too verbose | Add "concise" constraint |
+| Generic output | Add more Context details |
+| Wrong patterns | Specify Role expertise |
+| Missing features | Use numbered Action list |
+| Poor structure | Define Format explicitly |
+| Insecure code | Add security Constraints |
 
-### Prompt Library Categories
+### Copilot Mode Quick Reference
 
-| Category | Use For |
-|----------|---------|
-| Code Generation | Creating new code |
-| Testing | Test creation |
-| Refactoring | Improving existing code |
-| Documentation | Docs and comments |
-| Security | Security patterns |
+| Mode | When to Use |
+|------|-------------|
+| Agent | Generate code, run commands |
+| Planning | Review files, plan approach |
+| Need Review | Compare against solutions |
+| Testing | Run builds and tests |
+| Hand-Off | Document progress |
 
 ---
 
@@ -637,81 +769,81 @@ Before submitting any prompt, verify:
 
 ### Required (Due in 1 week)
 
-#### 1. Submit One Contribution
-- Use the template from Lab 3
-- Test 5+ times before submitting
+#### 1. Submit One Library Contribution
+- Use template from Lab 3
+- Test 5+ times with ≥80% success
 - Include all edge cases
-- Submit PR to prompt library
+- Create PR to prompt library
 
-**Submission Status:** ☐ Not Started  ☐ In Progress  ☐ Submitted
+**Status:** ☐ Not Started  ☐ In Progress  ☐ Submitted
 
-#### 2. Document 5 Personal Prompts
-For prompts you use regularly:
-- Format using CRAFT
-- Rate each with rubric
-- Identify improvement opportunities
+#### 2. Apply CRAFT to 5 Real Tasks
+Document prompts from your actual project work:
 
-| Prompt | Purpose | Quality |
-|--------|---------|---------|
-| 1. | | /10 |
-| 2. | | /10 |
-| 3. | | /10 |
-| 4. | | /10 |
-| 5. | | /10 |
+| Task | CRAFT Used? | Quality |
+|------|-------------|---------|
+| 1. | ☐ | ___/10 |
+| 2. | ☐ | ___/10 |
+| 3. | ☐ | ___/10 |
+| 4. | ☐ | ___/10 |
+| 5. | ☐ | ___/10 |
 
-#### 3. Rate Team's Top 10 Prompts
-Review prompts your team uses most:
-- Apply quality rubric
-- Identify patterns
-- Suggest improvements
+#### 3. Review Team's Top Prompts
+Apply quality rubric to prompts your team uses:
 
 **Completed:** ☐ Yes  ☐ No
 
 ---
 
-## Notes
+## Workshop Summary
 
-### Key Insights from Today
-1. ________________________________
-2. ________________________________
-3. ________________________________
+### Final Quality Scores
 
-### Prompts That Worked Well
-1. ________________________________
-2. ________________________________
+| Lab | Average | Target |
+|-----|---------|--------|
+| Lab 1 | ___/10 | 9/10 |
+| Lab 2 | ___/10 | 9/10 |
+| Lab 3 | ___% | 80%+ |
 
-### Things to Try with My Team
-1. ________________________________
-2. ________________________________
+### Top 3 Learnings
+
+1. ________________________________________________________________
+2. ________________________________________________________________
+3. ________________________________________________________________
+
+### Action Items for Your Team
+
+1. ________________________________________________________________
+2. ________________________________________________________________
+3. ________________________________________________________________
 
 ---
 
 ## Resources
 
-- **Prompt Library:** [Internal URL]
+- **Your Action Guide:** `[angular|java]/LAB_ACTION_GUIDE.md`
+- **Progress Tracker:** `docs/workflow-tracker.md`
+- **Prompt Library:** `prompt-library/`
+- **Solutions:** `[angular|java]/src/challenges/lab1*/solutions/`
 - **CRAFT Framework:** `docs/craft-framework/guide.md`
-- **Quality Rubric:** `docs/rubrics/prompt-quality-rubric.md`
-- **Office Hours:** Tuesdays 10-11 AM
-- **Slack:** #copilot-prompts
+- **Copilot Modes:** `.github/copilot-chat/`
 
 ---
 
 **Participant Information**
 
-**Name:** ________________________________
-
-**Team:** ________________________________
-
-**Date:** ________________________________
-
-**Lab 1 Avg Quality:** ___/10
-
-**Lab 2 Avg Quality:** ___/10
-
-**Lab 3 Consistency:** ___/10
+| Field | Value |
+|-------|-------|
+| Name | |
+| Team | |
+| Date | |
+| Track | ☐ Angular  ☐ Java |
+| Lab 1 Avg | ___/10 |
+| Lab 2 Avg | ___/10 |
+| Lab 3 Success | ___% |
 
 ---
 
 **End of Participant Guide**
 
-*Remember: Great prompts are specific, complete, and tested.*
+*Remember: Expert prompts are specific, complete, and tested. Use CRAFT for every prompt.*
