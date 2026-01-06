@@ -35,7 +35,12 @@ Create your own library-quality prompt entry.
 - **CRAFT Framework:** `docs/craft-framework/guide.md`
 - **Quality Rubric:** `docs/rubrics/prompt-quality-rubric.md`
 - **Prompt Library:** `prompt-library/`
-- **Exercises:** `exercises/`
+
+## Language-Specific Exercises
+
+Each language folder contains exercises tailored to that framework:
+- **Angular:** `angular/exercises/` (RxJS, Angular patterns, Jest)
+- **Java:** `java/exercises/` (Spring Boot, JUnit 5, Bean Validation)
 
 ## The CRAFT Framework
 
@@ -70,13 +75,14 @@ Create your own library-quality prompt entry.
 cd angular
 npm install
 npm run build
-# Start with exercises/bad-prompts/transform-these.md
+# Start with: exercises/bad-prompts/transform-these.md
+# Then: src/challenges/lab1-basic/challenge1-login.ts
 ```
 
 ### Java 17
 ```bash
 cd java
 mvn clean compile
-mvn test
-# Start with src/main/java/.../challenges/lab1/Challenge1Login.java
+# Start with: exercises/bad-prompts/transform-these.md
+# Then: src/main/java/.../challenges/lab1/Challenge1Login.java
 ```

@@ -33,6 +33,13 @@ Use established patterns from the prompt library.
 ### Lab 3: Contributing to the Library (10 min)
 Create your own library-quality prompt entry.
 
+## Exercises
+
+Start here for hands-on practice:
+- **Transform Bad Prompts:** `exercises/bad-prompts/transform-these.md`
+- **Reference Examples:** `exercises/good-prompts/reference-examples.md`
+- **Your Prompts:** `exercises/your-prompts/` (save your work here)
+
 ## Resources
 
 - CRAFT Framework: `../docs/craft-framework/guide.md`
