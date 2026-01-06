@@ -2,27 +2,37 @@ package com.fidelity.promptlab.models;
 
 /**
  * Request object for user login.
+ *
+ * NOTE: This is implemented as a record for Java 17 best practices.
+ * Records provide:
+ * - Immutability
+ * - Auto-generated equals, hashCode, toString
+ * - Compact constructor for validation
  */
-public class LoginRequest {
-    private String email;
-    private String password;
-    private boolean rememberMe;
-
-    public LoginRequest() {}
-
-    public LoginRequest(String email, String password) {
-        this.email = email;
-        this.password = password;
-        this.rememberMe = false;
+public record LoginRequest(
+    String email,
+    String password,
+    boolean rememberMe
+) {
+    /**
+     * Compact constructor for validation.
+     * In a production app, you'd use Bean Validation annotations instead.
+     */
+    public LoginRequest {
+        // Challenge: This validation is minimal
+        // Should use @NotBlank, @Email, @Size annotations
+        if (email == null || email.isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+        if (password == null || password.isBlank()) {
+            throw new IllegalArgumentException("Password is required");
+        }
     }
 
-    // Getters and Setters
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
-
-    public String getPassword() { return password; }
-    public void setPassword(String password) { this.password = password; }
-
-    public boolean isRememberMe() { return rememberMe; }
-    public void setRememberMe(boolean rememberMe) { this.rememberMe = rememberMe; }
+    /**
+     * Convenience constructor without rememberMe.
+     */
+    public LoginRequest(String email, String password) {
+        this(email, password, false);
+    }
 }

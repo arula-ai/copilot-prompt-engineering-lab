@@ -21,6 +21,14 @@
     </properties>
 
     <dependencies>
+        <!-- Spring Context for annotations (compile-only, not runtime dependency) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>6.1.3</version>
+            <scope>provided</scope>
+        </dependency>
+
         <!-- Jackson for JSON processing -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

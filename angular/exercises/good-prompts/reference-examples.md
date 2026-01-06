@@ -130,6 +130,69 @@ Constraints:
 
 ---
 
+## Example 5: Modern Angular 17+ with Signals and inject()
+
+```
+Context: Angular 17 application using the latest patterns including signals
+for reactive state, inject() function for DI, and functional guards/interceptors.
+
+Role: Senior Angular developer proficient in Angular 17+ features.
+
+Action: Create a PortfolioStateService that:
+1. Uses inject() instead of constructor DI
+2. Uses signal() for reactive portfolio state
+3. Uses computed() for derived values (total value, gain/loss)
+4. Uses effect() for side effects (logging, persistence)
+5. Exposes readonly signals to consumers
+
+Format: TypeScript with:
+- Standalone service with providedIn: 'root'
+- Type-safe signals: WritableSignal<Portfolio[]>
+- Computed signals for aggregations
+- Effect for localStorage sync
+
+Constraints:
+- No RxJS for state management (signals only)
+- Must work with OnPush components
+- Must handle initial load from API (one-time observable)
+- Use toSignal() for HTTP responses
+```
+
+**Why it works:** Uses latest Angular patterns, clear migration from RxJS to signals, practical use case.
+
+---
+
+## Example 6: Functional HTTP Interceptor (Angular 17+)
+
+```
+Context: Angular 17 app using functional interceptors (HttpInterceptorFn)
+instead of class-based interceptors.
+
+Role: Senior Angular developer with functional programming focus.
+
+Action: Create a functional authentication interceptor that:
+1. Adds JWT from AuthService to Authorization header
+2. Uses inject() to access AuthService within the function
+3. Handles token refresh on 401 using switchMap
+4. Queues requests during refresh to prevent race conditions
+5. Clears auth state on refresh failure
+
+Format: TypeScript implementing HttpInterceptorFn:
+- Export as const: authInterceptor: HttpInterceptorFn
+- Use inject() for services
+- Return Observable<HttpEvent<unknown>>
+
+Constraints:
+- Must be tree-shakable (no class decorator)
+- Configure via provideHttpClient(withInterceptors([...]))
+- Must handle concurrent 401s (single refresh)
+- Log auth events without exposing tokens
+```
+
+**Why it works:** Demonstrates modern functional interceptor pattern, proper inject() usage in functions.
+
+---
+
 ## Key Angular Patterns to Reference
 
 | Pattern | When to Mention |
@@ -140,5 +203,11 @@ Constraints:
 | `OnPush` | Performance optimization |
 | `async` pipe | Template subscriptions |
 | `trackBy` | ngFor performance |
-| `inject()` | Modern DI pattern |
+| `inject()` | Modern DI pattern (Angular 14+) |
 | `signal()` | Angular 16+ reactivity |
+| `computed()` | Derived signal values |
+| `effect()` | Signal side effects |
+| `toSignal()` | Convert Observable to Signal |
+| `HttpInterceptorFn` | Functional interceptors (Angular 15+) |
+| `withInterceptors()` | Register functional interceptors |
+| `DestroyRef` | Injection-based cleanup |
