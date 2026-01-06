@@ -1,291 +1,214 @@
 # Lab Action Guide - Java 17
 
-Follow these steps sequentially. After each stage, check off completed items and note your quality ratings.
+Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer Mode with the Hand-Off prompt so progress lands in `docs/workflow-tracker.md`.
 
 ## Quick Reference
 
-| Stage | Focus | Core Files / Commands |
+| Stage | Primary Modes | Core Artifacts / Commands |
 | --- | --- | --- |
-| 0 | Setup | `mvn clean compile`, `mvn test` |
-| 1 | CRAFT Basics | `challenges/lab1/Challenge*.java`, `solutions/` |
-| 2 | Library Patterns | `challenges/lab2/`, `prompt-library/` |
-| 3 | Contribution | `challenges/lab3/`, `prompt-library/` |
-| 4 | Validation | `mvn compile`, `mvn test`, quality review |
+| 0 | Agent | `mvn clean compile`, `mvn test` |
+| 1 | Planning → Agent ↔ Need Review | `#Challenge1Login.java`, `#challenge1-login-solution.md`, CRAFT prompts |
+| 2 | Planning → Agent | `#PortfolioServiceChallenge.java`, `#api-service-method.md`, library patterns |
+| 3 | Agent ↔ Need Review | `#ContributionTemplate.java`, new pattern file |
+| 4 | Testing → Agent | `mvn compile`, `mvn test`, quality summary |
+
+## Mode Loop Reminder
+- Planning → Agent → Need Review → Testing
+- Use `#filename` to reference files as chat variables
+- Use Summarizer Hand-Off after each stage to track progress
 
 ---
 
-## Stage 0 – Environment Setup (5 min)
+## Stage 0 – Environment Setup
 
-### Prerequisites
-- Java 17 or higher: `java -version`
-- Maven 3.8+: `mvn -version`
-
-### Actions
-- [ ] Navigate to the Java folder: `cd java`
-- [ ] Compile the project: `mvn clean compile`
-- [ ] Run tests: `mvn test`
-- [ ] Confirm Copilot is active in your IDE (check status bar)
-- [ ] Open `src/main/java/com/fidelity/promptlab/challenges/lab1/` in your editor
-
-### Checkpoint
-- Build completes without errors
-- Copilot suggestions appearing when you type comments
-- Can navigate to challenge files
+- Agent Mode: verify prerequisites with `#runInTerminal java -version` (requires 17+) and `#runInTerminal mvn -version` (requires 3.8+)
+- Agent Mode: `#runInTerminal mvn clean compile` in the java folder
+- Agent Mode: `#runInTerminal mvn test` to verify test execution
+- Agent Mode: confirm Copilot is active by checking the status bar icon
+- Agent Mode: open `src/main/java/com/fidelity/promptlab/challenges/lab1/` and verify all challenge files are accessible
+- Hand-Off: summarize setup status, note any dependency issues or blockers
 
 ---
 
-## Stage 1 – Crafting Effective Prompts (25 min)
+## Stage 1 – Crafting Effective Prompts with CRAFT
 
-### Overview
-Transform vague prompts into expert prompts using the CRAFT framework.
+### 1.1 Challenge 1: Login Method
+- Planning Mode: review `#Challenge1Login.java` and identify what makes the prompt "Create a login method" insufficient
+- Planning Mode: reference `#guide.md` (CRAFT framework) to plan your improved prompt covering Context, Role, Action, Format, Tone
+- Planning Mode: note Java-specific considerations:
+  - Spring Security integration
+  - BCrypt password encoding
+  - JWT token generation
+  - Record types for DTOs
+  - Account lockout after failed attempts
+- Agent Mode: write your CRAFT prompt as a comment in the challenge file, then use Copilot to generate the implementation
+- Need Review Mode: compare your generated code against `#challenge1-login-solution.md`; rate quality 1-10
+- Hand-Off: record your prompt, quality rating, and key learnings
 
-### CRAFT Framework Quick Reference
-| Element | Question to Ask | Example |
-|---------|-----------------|---------|
-| **C**ontext | What's the tech stack/situation? | Spring Boot 3, Java 17, financial app |
-| **R**ole | What expert should Copilot be? | Senior Java developer with Spring Security expertise |
-| **A**ction | What specific steps are needed? | 1. Validate 2. Call service 3. Handle exceptions |
-| **F**ormat | What should output look like? | Records, Optional, sealed interfaces, Javadoc |
-| **T**one/Constraints | What rules must be followed? | OWASP compliant, use BigDecimal for money |
+### 1.2 Challenge 2: Test Generation
+- Planning Mode: review `#Challenge2Tests.java` and the `calculatePortfolioReturn` method using BigDecimal
+- Planning Mode: note Java-specific testing requirements:
+  - JUnit 5 with @Nested and @DisplayName
+  - @ParameterizedTest with @CsvSource
+  - AssertJ assertions with `isEqualByComparingTo()` for BigDecimal
+  - ArithmeticException handling for division by zero
+- Agent Mode: craft a CRAFT prompt specifying test framework, edge cases, and parameterized tests
+- Agent Mode: generate comprehensive test suite with Copilot
+- Need Review Mode: compare against `#challenge2-tests-solution.md`; verify coverage of happy path, edge cases, boundaries
+- Hand-Off: record quality rating and which CRAFT elements made the biggest difference
 
-### Challenge Sequence
-
-#### Challenge 1: Login Method (5 min)
-- [ ] Open `Challenge1Login.java`
-- [ ] Read the bad prompt: "Create a login method"
-- [ ] Write your CRAFT prompt in the designated area
-- [ ] Generate code with Copilot
-- [ ] Rate the output quality (1-10): ___
-- [ ] Compare with `solutions/challenge1-login-solution.md`
-
-**Java-Specific Tips:**
-- Specify: Spring Security, BCrypt, JWT tokens
-- Request: records for DTOs, @Service annotation
-- Constrain: timing-safe password comparison, account lockout
-
-#### Challenge 2: Test Generation (5 min)
-- [ ] Open `Challenge2Tests.java`
-- [ ] Read the bad prompt: "Write tests for this"
-- [ ] Analyze the `calculatePortfolioReturn` method with BigDecimal
-- [ ] Write your CRAFT prompt targeting JUnit 5 + AssertJ
-- [ ] Generate test suite with Copilot
-- [ ] Rate the output quality (1-10): ___
-- [ ] Compare with `solutions/challenge2-tests-solution.md`
-
-**Java-Specific Tips:**
-- Specify: @Nested classes, @ParameterizedTest, @DisplayName
-- Request: `isEqualByComparingTo()` for BigDecimal comparisons
-- Cover: ArithmeticException for division by zero
-
-#### Challenge 3: Bug Fix (5 min)
-- [ ] Open `Challenge3Bugfix.java`
-- [ ] Read the bad prompt: "Fix the bug"
-- [ ] Identify all bugs in the `formatCurrency` method:
-  - Using `double` instead of `BigDecimal`
+### 1.3 Challenge 3: Bug Fix
+- Planning Mode: review `#Challenge3Bugfix.java` and identify all bugs:
+  - Using `double` instead of `BigDecimal` (precision errors)
   - No thousand separators
-  - Wrong negative sign position
-  - Only USD/EUR supported
-- [ ] Write your CRAFT prompt listing each bug explicitly
-- [ ] Generate fix with Copilot
-- [ ] Rate the output quality (1-10): ___
-- [ ] Compare with `solutions/challenge3-bugfix-solution.md`
+  - Wrong negative sign position ("$-50" vs "-$50")
+  - Only USD/EUR supported (should use ISO 4217)
+- Agent Mode: craft a CRAFT prompt explicitly listing each bug with expected fix approach
+- Agent Mode: generate fixed implementation using `NumberFormat.getCurrencyInstance(Locale)` and `Currency.getInstance()`
+- Need Review Mode: compare against `#challenge3-bugfix-solution.md`; verify edge cases including JPY (0 decimals), BHD (3 decimals)
+- Hand-Off: record quality rating and bug-fix approach learnings
 
-**Java-Specific Tips:**
-- Request: `NumberFormat.getCurrencyInstance(Locale)`
-- Specify: `Currency.getInstance()` for ISO 4217 codes
-- Handle: currencies with different decimal places (JPY=0, USD=2, BHD=3)
-
-#### Challenge 4: Error Handling (5 min)
-- [ ] Open `Challenge4Errors.java`
-- [ ] Read the bad prompt: "Add error handling"
-- [ ] Analyze the missing error handling in `fetchUserPortfolios`
-- [ ] Write your CRAFT prompt specifying:
+### 1.4 Challenge 4: Error Handling
+- Planning Mode: review `#Challenge4Errors.java` and catalog missing error handling:
   - HTTP status codes: 400, 401, 403, 404, 429, 500+
   - Network errors and timeouts
   - Retry strategy with exponential backoff
-  - Typed error responses (sealed interface)
-- [ ] Generate error handling with Copilot
-- [ ] Rate the output quality (1-10): ___
-- [ ] Compare with `solutions/challenge4-errors-solution.md`
+  - Typed error responses
+- Planning Mode: note Java-specific patterns:
+  - Sealed interface for PortfolioError types
+  - Result<S, F> pattern instead of exceptions
+  - SLF4J logging with MDC context
+  - Spring RestClient or WebClient
+- Agent Mode: craft a CRAFT prompt specifying error handling strategy and return types
+- Agent Mode: generate resilient service method with Copilot
+- Need Review Mode: compare against `#challenge4-errors-solution.md`; verify error decision tree coverage
+- Hand-Off: record quality rating and sealed interface usage insights
 
-**Java-Specific Tips:**
-- Request: sealed interface for PortfolioError types
-- Specify: Result<S, F> pattern instead of exceptions
-- Include: SLF4J logging with MDC context
-
-#### Challenge 5: Optimization (5 min)
-- [ ] Open `Challenge5Optimize.java`
-- [ ] Read the bad prompt: "Optimize this code"
-- [ ] Analyze the O(n²) `findDuplicateTransactions` algorithm
-- [ ] Write your CRAFT prompt with specific optimization targets:
-  - Reduce to O(n log n) using HashMap grouping
-  - Sort by timestamp for early termination
-  - Use records for configuration
-- [ ] Generate optimized code with Copilot
-- [ ] Rate the output quality (1-10): ___
-- [ ] Compare with `solutions/challenge5-optimize-solution.md`
-
-**Java-Specific Tips:**
-- Request: Streams API with `Collectors.groupingBy()`
-- Specify: `LocalDateTime` comparison using nanos for performance
-- Include: benchmark comparison in Javadoc
-
-### Stage 1 Checkpoint
-- [ ] Completed all 5 challenges
-- [ ] Average quality rating: ___/10
-- [ ] Identified which CRAFT elements made the biggest difference
-- [ ] Notes on what worked well: _________________________________
+### 1.5 Challenge 5: Optimization
+- Planning Mode: review `#Challenge5Optimize.java` and analyze the O(n²) `findDuplicateTransactions` complexity
+- Planning Mode: plan optimization approach:
+  - HashMap grouping by symbol+quantity+price
+  - Timestamp sorting within groups
+  - Early termination when time window exceeded
+  - Records for configuration options
+- Agent Mode: craft a CRAFT prompt specifying target complexity O(n log n) and Java 17 features
+- Agent Mode: generate optimized implementation with Copilot
+- Need Review Mode: compare against `#challenge5-optimize-solution.md`; verify performance improvement
+- Hand-Off: summarize all 5 challenge ratings, average quality score, and top CRAFT insights
 
 ---
 
-## Stage 2 – Applying Library Patterns (15 min)
+## Stage 2 – Applying Library Patterns
 
-### Overview
-Use established patterns from the prompt library to generate high-quality code.
+### 2.1 Portfolio Service Pattern
+- Planning Mode: review `#PortfolioServiceChallenge.java` and identify the issues (no caching, no retry, no error transformation)
+- Planning Mode: open `#api-service-method.md` from the prompt library and plan variable substitution:
+  - `[service-name]` → PortfolioService
+  - `[method-name]` → getPortfolioById
+  - `[endpoint]` → GET /api/portfolios/{id}
+  - `[return-type]` → Result<Portfolio, PortfolioError>
+  - `[caching]` → @Cacheable with 5-minute TTL
+  - `[retry]` → Resilience4j or manual 3x exponential backoff
+  - `[errors]` → PortfolioNotFoundError, NetworkError (sealed interface)
+- Agent Mode: apply the customized pattern prompt in Copilot to generate the improved service
+- Agent Mode: verify output includes @Service, @Cacheable, retry logic, and typed errors
+- Hand-Off: record pattern effectiveness and quality rating
 
-### Actions
+### 2.2 Validation Pattern
+- Planning Mode: review `#ValidationChallenge.java` and open `#input-validation.md`
+- Planning Mode: note Java-specific validation patterns:
+  - Bean Validation annotations (@NotNull, @Pattern, @DecimalMin)
+  - Custom validators for complex rules
+  - ValidationResult sealed interface
+- Agent Mode: apply the validation pattern to generate type-safe validation service
+- Need Review Mode: verify validators handle IDOR prevention, input sanitization, OWASP alignment
+- Hand-Off: record validation pattern insights
 
-#### 2.1 Portfolio Service Challenge
-- [ ] Open `challenges/lab2/PortfolioServiceChallenge.java`
-- [ ] Open `../prompt-library/code-generation/api-service-method.md`
-- [ ] Review the Java example in the pattern file
-- [ ] Fill in template variables:
-  - `[service-name]`: PortfolioService
-  - `[method-name]`: getPortfolioById
-  - `[endpoint]`: GET /api/portfolios/{id}
-  - `[return-type]`: Result<Portfolio, PortfolioError>
-  - `[caching]`: @Cacheable with 5-minute TTL
-  - `[retry]`: Resilience4j or manual 3x exponential backoff
-  - `[errors]`: PortfolioNotFoundError, NetworkError
-- [ ] Generate code with your customized prompt
-- [ ] Quality rating: ___/10
-
-#### 2.2 Validation Challenge
-- [ ] Open `challenges/lab2/ValidationChallenge.java`
-- [ ] Open `../prompt-library/security/input-validation.md`
-- [ ] Apply the Java validation pattern with Bean Validation
-- [ ] Generate validation service
-- [ ] Quality rating: ___/10
-
-#### 2.3 Test Generation Challenge
-- [ ] Open `challenges/lab2/TestGenerationChallenge.java`
-- [ ] Open `../prompt-library/testing/unit-test-suite.md`
-- [ ] Apply the JUnit 5 testing pattern
-- [ ] Verify coverage includes: @Nested, @ParameterizedTest, Mockito
-- [ ] Quality rating: ___/10
-
-### Stage 2 Checkpoint
-- [ ] Successfully used 3 library patterns
-- [ ] Understand how to customize pattern variables for Java
-- [ ] Average quality rating: ___/10
+### 2.3 Test Generation Pattern
+- Planning Mode: review `#TestGenerationChallenge.java` and open `#unit-test-suite.md`
+- Agent Mode: apply the JUnit 5 testing pattern to generate comprehensive test coverage
+- Need Review Mode: verify tests include @Nested, @ParameterizedTest, Mockito mocking, AssertJ assertions
+- Hand-Off: summarize Stage 2 pattern usage and average quality rating
 
 ---
 
-## Stage 3 – Contributing to the Library (10 min)
+## Stage 3 – Contributing to the Library
 
-### Overview
-Create your own reusable prompt pattern based on discoveries during the lab.
-
-### Actions
-- [ ] Open `challenges/lab3/ContributionTemplate.java`
-- [ ] Identify a pattern you discovered that works well
-- [ ] Fill in the pattern template:
-  - Pattern Name: _________________________________
-  - Category: [ ] code-generation [ ] testing [ ] refactoring [ ] documentation [ ] security
-  - Language: Java 17 / Spring Boot
-- [ ] Test your pattern 5 times (use variety of scenarios)
-  - Test 1: ___/10
-  - Test 2: ___/10
-  - Test 3: ___/10
-  - Test 4: ___/10
-  - Test 5: ___/10
-- [ ] Calculate success rate: ___% (target: 80%+)
-
-### Java-Specific Pattern Ideas
-Consider patterns for:
-- Record-based DTOs with validation
-- Spring @Service with @Transactional
-- Repository with custom queries
-- Exception handling with @ControllerAdvice
-- Streams processing pipelines
-
-### Contribution Checklist
-- [ ] Pattern tested 5+ times
-- [ ] Success rate ≥ 80%
-- [ ] Java example usage included
-- [ ] Variables documented with examples
-- [ ] Edge cases noted (null handling, exceptions)
-
-### Stage 3 Checkpoint
-- [ ] Created library-quality pattern
-- [ ] Pattern file saved to: `../prompt-library/[category]/[pattern-name]-java.md`
+- Planning Mode: review `#ContributionTemplate.java` and identify a repeatable prompt pattern you discovered during Labs 1-2
+- Planning Mode: consider Java-specific patterns for:
+  - Record-based DTOs with validation
+  - Spring @Service with @Transactional
+  - Repository with custom queries
+  - Exception handling with @ControllerAdvice
+  - Streams processing pipelines
+- Planning Mode: outline your pattern including:
+  - Pattern name and category
+  - Template with `[variables]`
+  - Variable descriptions with examples
+  - Expected output quality target
+- Agent Mode: create your pattern file following the library structure
+- Agent Mode: test your pattern 5 times on different scenarios:
+  - Test 1: describe input → record output quality
+  - Test 2: describe input → record output quality
+  - Test 3: describe input → record output quality
+  - Test 4: describe input → record output quality
+  - Test 5: describe input → record output quality
+- Agent Mode: calculate success rate (target ≥80%)
+- Need Review Mode: validate pattern meets library contribution criteria
+- Agent Mode: if success rate ≥80%, save pattern to `prompt-library/[category]/[pattern-name]-java.md`
+- Hand-Off: record pattern name, category, success rate, and file location
 
 ---
 
-## Stage 4 – Validation & Wrap-Up (5 min)
+## Stage 4 – Validation & Wrap-Up
 
-### Final Validation
-- [ ] Run: `mvn clean compile` (no errors)
-- [ ] Run: `mvn test` (tests pass)
-- [ ] Review your quality ratings across all challenges
-
-### Quality Summary
-| Challenge | Your Rating | Target |
-|-----------|-------------|--------|
-| 1. Login | ___/10 | 9/10 |
-| 2. Tests | ___/10 | 9/10 |
-| 3. Bug Fix | ___/10 | 9/10 |
-| 4. Errors | ___/10 | 9.5/10 |
-| 5. Optimize | ___/10 | 9/10 |
-| Lab 2 Avg | ___/10 | 9/10 |
-
-### Key Takeaways
-Record your top 3 learnings:
-1. _________________________________________________________________
-2. _________________________________________________________________
-3. _________________________________________________________________
-
-### Java-Specific Learnings
-What Java 17+ features improved your prompts?
-- [ ] Records for DTOs
-- [ ] Sealed interfaces for error types
-- [ ] Pattern matching in switch
-- [ ] Text blocks for multi-line prompts
-- [ ] Optional for null safety
-
-### Next Steps
-- [ ] Review `../INSTRUCTOR_GUIDE.md` for additional exercises
-- [ ] Explore remaining patterns in `../prompt-library/`
-- [ ] Apply CRAFT to your real project work this week
-- [ ] Try the Java-specific patterns: `*-java.md` files in prompt library
+- Testing Mode: `#runInTerminal mvn clean compile` – verify no compilation errors
+- Testing Mode: `#runInTerminal mvn test` – run all tests
+- Agent Mode: compile quality summary across all stages:
+  | Challenge | Quality Rating | Target |
+  |-----------|----------------|--------|
+  | 1. Login | ___/10 | 9/10 |
+  | 2. Tests | ___/10 | 9/10 |
+  | 3. Bug Fix | ___/10 | 9/10 |
+  | 4. Errors | ___/10 | 9.5/10 |
+  | 5. Optimize | ___/10 | 9/10 |
+  | Lab 2 Avg | ___/10 | 9/10 |
+- Agent Mode: document Java 17 features that improved prompts:
+  - [ ] Records for DTOs
+  - [ ] Sealed interfaces for error types
+  - [ ] Pattern matching in switch
+  - [ ] Text blocks for multi-line prompts
+  - [ ] Optional for null safety
+- Agent Mode: document top 3 CRAFT learnings in `docs/workflow-tracker.md`
+- Hand-Off: confirm final quality scores, pattern contribution status, and next steps for applying CRAFT at work
 
 ---
 
 ## Troubleshooting
 
-| Issue | Solution |
-|-------|----------|
-| Copilot not responding | Check internet, restart IDE, verify subscription |
-| Poor quality output | Add more context, specify Java version explicitly |
-| Build errors | Check Java version (`java -version`), run `mvn clean` |
-| Test failures | Check for missing dependencies in `pom.xml` |
-| Can't find solutions | Solutions are in `challenges/lab1/solutions/` |
+| Issue | Copilot Solution |
+|-------|------------------|
+| Copilot not responding | Agent Mode: check internet, restart IDE, verify subscription status |
+| Poor quality output | Planning Mode: add more Context, specify Java version explicitly |
+| Build errors | Agent Mode: `#runInTerminal mvn clean`, verify Java 17+ with `java -version` |
+| Test failures | Agent Mode: check for missing dependencies in `pom.xml` |
+| Can't find solutions | Agent Mode: solutions are in `challenges/lab1/solutions/` |
 
 ## Java-Specific Prompting Tips
 
-| Scenario | What to Specify |
-|----------|-----------------|
-| Money calculations | Use BigDecimal, specify RoundingMode |
+| Scenario | What to Specify in CRAFT Prompt |
+|----------|--------------------------------|
+| Money calculations | Use BigDecimal, specify RoundingMode.HALF_UP |
 | Date/time | Use java.time.*, specify timezone handling |
 | Collections | Mutable vs immutable, Stream API usage |
-| Null handling | Optional return, @Nullable annotations |
+| Null handling | Optional return, @Nullable/@NonNull annotations |
 | Testing | JUnit 5, AssertJ, Mockito versions |
 | Spring | Version 3.x, Boot vs Framework |
 
-## Resources
+## Key Files Reference
 
-- CRAFT Framework: `../docs/craft-framework/guide.md`
-- Prompt Library: `../prompt-library/`
-- Java-Specific Patterns: `../prompt-library/*-java.md`
-- Solution Files: `challenges/lab1/solutions/`
-- Instructor Guide: `../INSTRUCTOR_GUIDE.md`
+- CRAFT Framework: `#guide.md` (docs/craft-framework/)
+- Prompt Library: `#api-service-method.md`, `#unit-test-suite.md`, `#input-validation.md`
+- Java-Specific Patterns: `#api-service-method-java.md`, `#unit-test-suite-java.md`, `#input-validation-java.md`
+- Solutions: `#challenge1-login-solution.md` through `#challenge5-optimize-solution.md`
+- Progress Tracking: `#workflow-tracker.md`
