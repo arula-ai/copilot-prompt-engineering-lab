@@ -45,6 +45,30 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Need Review Mode: compare your generated code against `#challenge1-login-solution.md`; rate quality 1-10
 - Hand-Off: record your prompt, quality rating, and key learnings
 
+<details>
+<summary>💡 CRAFT Prompt Hint (click to expand)</summary>
+
+**Starter Example:**
+```
+Context: Spring Boot 3 app with Spring Security 6, JWT auth, BCrypt passwords
+
+Role: Senior Java developer with Spring Security expertise
+
+Action: Create login method that:
+1. Accepts LoginRequest record (email, password, rememberMe)
+2. Validates inputs and loads user from repository
+3. Verifies password with BCryptPasswordEncoder
+4. Generates JWT tokens (15 min access, 24h/30d refresh)
+5. Tracks failed attempts (lock after 5 failures)
+
+Format: Java 17 with records, Optional handling, @Service, Javadoc
+
+Constraints: Never log passwords, timing-safe comparison, OWASP compliant
+```
+
+📖 **Full example:** See [`solutions/challenge1-login-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge1-login-solution.md)
+</details>
+
 ### 1.2 Challenge 2: Test Generation
 - Planning Mode: review `#Challenge2Tests.java` and the `calculatePortfolioReturn` method using BigDecimal
 - Planning Mode: note Java-specific testing requirements:
@@ -57,6 +81,31 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Need Review Mode: compare against `#challenge2-tests-solution.md`; verify coverage of happy path, edge cases, boundaries
 - Hand-Off: record quality rating and which CRAFT elements made the biggest difference
 
+<details>
+<summary>💡 CRAFT Prompt Hint (click to expand)</summary>
+
+**Starter Example:**
+```
+Context: JUnit 5 tests for financial app, testing calculatePortfolioReturn with BigDecimal
+
+Role: QA engineer with expertise in financial calculations and BigDecimal precision
+
+Action: Generate test suite covering:
+1. Happy path: positive return, negative return, break-even, with dividends
+2. Edge cases: zero initial value, very small/large values
+3. Boundary values: precision limits, rounding behavior
+4. Invalid inputs: null values, exception handling
+
+Format: JUnit 5 with @Nested, @DisplayName, @ParameterizedTest, AssertJ assertions
+
+Constraints: Use BigDecimal.valueOf(), compare with isEqualByComparingTo()
+```
+
+📖 **Full example:** See [`solutions/challenge2-tests-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge2-tests-solution.md)
+
+📚 **Library pattern:** See [`prompt-library/testing/unit-test-suite-java.prompt.md`](../prompt-library/testing/unit-test-suite-java.prompt.md)
+</details>
+
 ### 1.3 Challenge 3: Bug Fix
 - Planning Mode: review `#Challenge3Bugfix.java` and identify all bugs:
   - Using `double` instead of `BigDecimal` (precision errors)
@@ -67,6 +116,33 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Agent Mode: generate fixed implementation using `NumberFormat.getCurrencyInstance(Locale)` and `Currency.getInstance()`
 - Need Review Mode: compare against `#challenge3-bugfix-solution.md`; verify edge cases including JPY (0 decimals), BHD (3 decimals)
 - Hand-Off: record quality rating and bug-fix approach learnings
+
+<details>
+<summary>💡 CRAFT Prompt Hint (click to expand)</summary>
+
+**Starter Example:**
+```
+Context: Java financial app with buggy formatCurrency method
+Current bugs (with examples):
+- formatCurrency(1234.5, "USD") → "$1234.5" (missing thousand separator)
+- formatCurrency(-50, "USD") → "$-50" (wrong negative position)
+- Uses double causing precision errors
+
+Role: Senior developer with i18n experience in financial applications
+
+Action: Fix these specific bugs:
+1. Add locale-aware thousand separators
+2. Use proper negative currency formatting
+3. Use BigDecimal to avoid floating point errors
+4. Support all ISO 4217 currency codes via NumberFormat
+
+Format: Java using NumberFormat.getCurrencyInstance(Locale), BigDecimal
+
+Constraints: Handle null inputs, support JPY (0 decimals), BHD (3 decimals)
+```
+
+📖 **Full example:** See [`solutions/challenge3-bugfix-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge3-bugfix-solution.md)
+</details>
 
 ### 1.4 Challenge 4: Error Handling
 - Planning Mode: review `#Challenge4Errors.java` and catalog missing error handling:
@@ -84,6 +160,30 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Need Review Mode: compare against `#challenge4-errors-solution.md`; verify error decision tree coverage
 - Hand-Off: record quality rating and sealed interface usage insights
 
+<details>
+<summary>💡 CRAFT Prompt Hint (click to expand)</summary>
+
+**Starter Example:**
+```
+Context: Spring Boot 3 portfolio service calling external API, currently no error handling
+
+Role: Senior Java developer with resilience engineering expertise
+
+Action: Add comprehensive error handling:
+1. Handle HTTP errors: 400 (bad request), 401/403 (auth), 404 (not found), 429 (rate limit), 500+ (server)
+2. Handle network errors and timeouts
+3. Implement retry with exponential backoff (3 attempts, 1s/2s/4s)
+4. Return Result<Portfolio, PortfolioError> instead of throwing
+5. Log errors with MDC context (correlationId, userId)
+
+Format: Java 17 with sealed interface for error types, Spring RestClient
+
+Constraints: Don't retry on 4xx, include Retry-After header support for 429
+```
+
+📖 **Full example:** See [`solutions/challenge4-errors-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge4-errors-solution.md)
+</details>
+
 ### 1.5 Challenge 5: Optimization
 - Planning Mode: review `#Challenge5Optimize.java` and analyze the O(n²) `findDuplicateTransactions` complexity
 - Planning Mode: plan optimization approach:
@@ -96,13 +196,38 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Need Review Mode: compare against `#challenge5-optimize-solution.md`; verify performance improvement
 - Hand-Off: summarize all 5 challenge ratings, average quality score, and top CRAFT insights
 
+<details>
+<summary>💡 CRAFT Prompt Hint (click to expand)</summary>
+
+**Starter Example:**
+```
+Context: Financial app with O(n²) findDuplicateTransactions, processing 10k+ transactions
+Currently uses nested loops comparing every pair
+
+Role: Senior Java developer with algorithm optimization expertise
+
+Action: Optimize to O(n log n):
+1. Group transactions by key (symbol+quantity+price) using HashMap
+2. Sort each group by timestamp
+3. Within each group, find duplicates within time window (60s)
+4. Use early termination when time window exceeded
+5. Return List<DuplicatePair> with both transactions
+
+Format: Java 17 with records, Stream API, Collectors.groupingBy
+
+Constraints: Maintain accuracy, handle edge cases (empty list, single item groups)
+```
+
+📖 **Full example:** See [`solutions/challenge5-optimize-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge5-optimize-solution.md)
+</details>
+
 ---
 
 ## Stage 2 – Applying Library Patterns
 
 ### 2.1 Portfolio Service Pattern
 - Planning Mode: review `#PortfolioServiceChallenge.java` and identify the issues (no caching, no retry, no error transformation)
-- Planning Mode: open `#api-service-method.md` from the prompt library and plan variable substitution:
+- Planning Mode: open the API service pattern from the prompt library and plan variable substitution:
   - `[service-name]` → PortfolioService
   - `[method-name]` → getPortfolioById
   - `[endpoint]` → GET /api/portfolios/{id}
@@ -114,8 +239,12 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Agent Mode: verify output includes @Service, @Cacheable, retry logic, and typed errors
 - Hand-Off: record pattern effectiveness and quality rating
 
+📚 **Library patterns to use:**
+- [`prompt-library/code-generation/api-service-method-java.prompt.md`](../prompt-library/code-generation/api-service-method-java.prompt.md) - Java-specific API service pattern
+- [`prompt-library/code-generation/api-service-method.prompt.md`](../prompt-library/code-generation/api-service-method.prompt.md) - General API service pattern
+
 ### 2.2 Validation Pattern
-- Planning Mode: review `#ValidationChallenge.java` and open `#input-validation.md`
+- Planning Mode: review `#ValidationChallenge.java` and open the input validation pattern
 - Planning Mode: note Java-specific validation patterns:
   - Bean Validation annotations (@NotNull, @Pattern, @DecimalMin)
   - Custom validators for complex rules
@@ -124,11 +253,19 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Need Review Mode: verify validators handle IDOR prevention, input sanitization, OWASP alignment
 - Hand-Off: record validation pattern insights
 
+📚 **Library patterns to use:**
+- [`prompt-library/security/input-validation-java.prompt.md`](../prompt-library/security/input-validation-java.prompt.md) - Java Bean Validation pattern
+- [`prompt-library/security/input-validation.prompt.md`](../prompt-library/security/input-validation.prompt.md) - General validation pattern
+
 ### 2.3 Test Generation Pattern
-- Planning Mode: review `#TestGenerationChallenge.java` and open `#unit-test-suite.md`
+- Planning Mode: review `#TestGenerationChallenge.java` and open the unit test pattern
 - Agent Mode: apply the JUnit 5 testing pattern to generate comprehensive test coverage
 - Need Review Mode: verify tests include @Nested, @ParameterizedTest, Mockito mocking, AssertJ assertions
 - Hand-Off: summarize Stage 2 pattern usage and average quality rating
+
+📚 **Library patterns to use:**
+- [`prompt-library/testing/unit-test-suite-java.prompt.md`](../prompt-library/testing/unit-test-suite-java.prompt.md) - JUnit 5 + Mockito pattern
+- [`prompt-library/testing/unit-test-suite.prompt.md`](../prompt-library/testing/unit-test-suite.prompt.md) - General unit test pattern
 
 ---
 
@@ -155,8 +292,15 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
   - Test 5: describe input → record output quality
 - Agent Mode: calculate success rate (target ≥80%)
 - Need Review Mode: validate pattern meets library contribution criteria
-- Agent Mode: if success rate ≥80%, save pattern to `prompt-library/[category]/[pattern-name]-java.md`
+- Agent Mode: if success rate ≥80%, save pattern to `prompt-library/[category]/[pattern-name]-java.prompt.md`
 - Hand-Off: record pattern name, category, success rate, and file location
+
+📚 **Reference patterns for contribution ideas:**
+- [`prompt-library/refactoring/extract-method.prompt.md`](../prompt-library/refactoring/extract-method.prompt.md) - Extract reusable methods
+- [`prompt-library/refactoring/review-and-refactor.prompt.md`](../prompt-library/refactoring/review-and-refactor.prompt.md) - Code review with suggestions
+- [`prompt-library/workflow/implementation-plan.prompt.md`](../prompt-library/workflow/implementation-plan.prompt.md) - Planning before coding
+- [`prompt-library/documentation/jsdoc-generation.prompt.md`](../prompt-library/documentation/jsdoc-generation.prompt.md) - Documentation generation
+- See full library: [`prompt-library/README.md`](../prompt-library/README.md)
 
 ---
 
@@ -207,8 +351,25 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 
 ## Key Files Reference
 
-- CRAFT Framework: `#guide.md` (docs/craft-framework/)
-- Prompt Library: `#api-service-method.md`, `#unit-test-suite.md`, `#input-validation.md`
-- Java-Specific Patterns: `#api-service-method-java.md`, `#unit-test-suite-java.md`, `#input-validation-java.md`
-- Solutions: `#challenge1-login-solution.md` through `#challenge5-optimize-solution.md`
-- Progress Tracking: `#workflow-tracker.md`
+### CRAFT Framework
+- [`docs/craft-framework/guide.md`](../docs/craft-framework/guide.md) - Complete CRAFT framework guide
+
+### Prompt Library Patterns
+| Category | TypeScript/General | Java-Specific |
+|----------|-------------------|---------------|
+| API Service | [`api-service-method.prompt.md`](../prompt-library/code-generation/api-service-method.prompt.md) | [`api-service-method-java.prompt.md`](../prompt-library/code-generation/api-service-method-java.prompt.md) |
+| Unit Tests | [`unit-test-suite.prompt.md`](../prompt-library/testing/unit-test-suite.prompt.md) | [`unit-test-suite-java.prompt.md`](../prompt-library/testing/unit-test-suite-java.prompt.md) |
+| Validation | [`input-validation.prompt.md`](../prompt-library/security/input-validation.prompt.md) | [`input-validation-java.prompt.md`](../prompt-library/security/input-validation-java.prompt.md) |
+| Refactoring | [`extract-method.prompt.md`](../prompt-library/refactoring/extract-method.prompt.md) | - |
+| Code Review | [`review-and-refactor.prompt.md`](../prompt-library/refactoring/review-and-refactor.prompt.md) | - |
+| Planning | [`implementation-plan.prompt.md`](../prompt-library/workflow/implementation-plan.prompt.md) | - |
+
+### Solution Files
+- [`challenge1-login-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge1-login-solution.md) - Login with CRAFT example
+- [`challenge2-tests-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge2-tests-solution.md) - Test generation example
+- [`challenge3-bugfix-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge3-bugfix-solution.md) - Bug fix example
+- [`challenge4-errors-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge4-errors-solution.md) - Error handling example
+- [`challenge5-optimize-solution.md`](src/main/java/com/fidelity/promptlab/challenges/lab1/solutions/challenge5-optimize-solution.md) - Optimization example
+
+### Progress Tracking
+- [`docs/workflow-tracker.md`](../docs/workflow-tracker.md) - Track your progress

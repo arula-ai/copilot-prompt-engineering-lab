@@ -14,14 +14,14 @@ A hands-on workshop for learning expert-level prompt engineering with GitHub Cop
 
 | Track | Setup | Action Guide |
 |-------|-------|--------------|
-| **Angular/TypeScript** | `cd angular && npm install && npm run build` | `angular/LAB_ACTION_GUIDE.md` |
-| **Java 17** | `cd java && mvn clean compile` | `java/LAB_ACTION_GUIDE.md` |
+| **Angular/TypeScript** | `cd angular && npm install && npm run build` | [`angular/LAB_ACTION_GUIDE.md`](angular/LAB_ACTION_GUIDE.md) |
+| **Java 17** | `cd java && mvn clean compile` | [`java/LAB_ACTION_GUIDE.md`](java/LAB_ACTION_GUIDE.md) |
 
 ### 2. Open Your Guides
 
-- **Participant Guide:** `02-prompt-engineering-participant-guide.md` - Your workbook for the lab
-- **Action Guide:** `[angular\|java]/LAB_ACTION_GUIDE.md` - Step-by-step Copilot instructions
-- **Progress Tracker:** `docs/workflow-tracker.md` - Track your progress
+- **Action Guide:** `[angular|java]/LAB_ACTION_GUIDE.md` - Step-by-step walkthrough with examples and hints
+- **Progress Tracker:** [`docs/workflow-tracker.md`](docs/workflow-tracker.md) - Track your progress
+- **CRAFT Framework:** [`docs/craft-framework/guide.md`](docs/craft-framework/guide.md) - Complete CRAFT reference
 
 ### 3. Verify Copilot
 
@@ -43,7 +43,7 @@ Transform 5 vague prompts into expert prompts using the CRAFT framework.
 | 4. Errors | "Add error handling" | Resilient error management |
 | 5. Optimize | "Optimize this code" | Algorithm optimization |
 
-**Solutions included:** Compare your prompts against expert solutions in `solutions/` folders.
+**Solutions included:** Each challenge has collapsible hints in the Action Guide, plus full expert CRAFT prompts in `solutions/` folders.
 
 ### Lab 2: Applying Library Patterns (15 min)
 
@@ -81,77 +81,102 @@ Chat mode configurations are in `.github/copilot-chat/`.
 | **F**ormat | How should output look? | "Observable<Result<T, E>>, full types, JSDoc..." |
 | **T**one/Constraints | What rules apply? | "Never log passwords, OWASP compliant..." |
 
+Full guide: [`docs/craft-framework/guide.md`](docs/craft-framework/guide.md)
+
 ## Repository Structure
 
 ```
 copilot-prompt-engineering-lab/
 ├── angular/                          # TypeScript/Angular track
-│   ├── LAB_ACTION_GUIDE.md          # Step-by-step Copilot instructions
-│   ├── src/challenges/
-│   │   ├── lab1-basic/              # CRAFT challenges
-│   │   │   └── solutions/           # Expert prompt solutions
-│   │   ├── lab2-library/            # Library pattern exercises
-│   │   └── lab3-contribute/         # Pattern contribution
-│   └── README.md                    # Angular-specific guide
+│   ├── LAB_ACTION_GUIDE.md          # Step-by-step walkthrough with hints
+│   ├── README.md                    # Angular-specific setup
+│   └── src/challenges/
+│       ├── lab1-basic/              # CRAFT challenges
+│       │   └── solutions/           # Expert CRAFT prompt examples
+│       ├── lab2-library/            # Library pattern exercises
+│       └── lab3-contribute/         # Pattern contribution
 │
 ├── java/                             # Java 17 track
-│   ├── LAB_ACTION_GUIDE.md          # Step-by-step Copilot instructions
-│   ├── src/main/java/.../challenges/
-│   │   ├── lab1/                    # CRAFT challenges
-│   │   │   └── solutions/           # Expert prompt solutions
-│   │   ├── lab2/                    # Library pattern exercises
-│   │   └── lab3/                    # Pattern contribution
-│   └── README.md                    # Java-specific guide
+│   ├── LAB_ACTION_GUIDE.md          # Step-by-step walkthrough with hints
+│   ├── README.md                    # Java-specific setup
+│   └── src/main/java/.../challenges/
+│       ├── lab1/                    # CRAFT challenges
+│       │   └── solutions/           # Expert CRAFT prompt examples
+│       ├── lab2/                    # Library pattern exercises
+│       └── lab3/                    # Pattern contribution
 │
-├── prompt-library/                   # Reusable prompt patterns
+├── prompt-library/                   # 18 reusable prompt patterns (.prompt.md)
 │   ├── code-generation/             # API services, data transformers
-│   ├── testing/                     # Unit tests, integration tests
-│   ├── refactoring/                 # Extract method, simplify
-│   ├── documentation/               # JSDoc, Javadoc
-│   └── security/                    # Validation, auth guards
+│   ├── testing/                     # Unit tests (Jest, JUnit 5)
+│   ├── refactoring/                 # Extract method, review & refactor
+│   ├── documentation/               # JSDoc, README generation
+│   ├── security/                    # Validation, auth guards
+│   ├── workflow/                    # Planning, commits, feature breakdown
+│   └── README.md                    # Library documentation
 │
 ├── .github/
-│   ├── copilot-instructions.md      # Base Copilot configuration
 │   └── copilot-chat/                # Chat mode definitions
 │       ├── need-review.chatmode.md  # Quality review mode
 │       └── hand-off.chatmode.md     # Progress summarizer mode
 │
 ├── docs/
-│   └── workflow-tracker.md          # Progress tracking template
+│   ├── craft-framework/guide.md     # Complete CRAFT framework guide
+│   ├── workflow-tracker.md          # Progress tracking template
+│   ├── rubrics/                     # Quality assessment rubrics
+│   └── examples/                    # Before/after prompt examples
 │
-├── 02-prompt-engineering-participant-guide.md  # Student workbook
-├── INSTRUCTOR_GUIDE.md              # Facilitation guide
-└── DEMO_SCRIPT.md                   # Live demonstration script
+└── README.md                        # This file
 ```
 
-## Prompt Library Patterns
+## Prompt Library (18 Patterns)
+
+All patterns use the official [VS Code Copilot prompt file format](https://code.visualstudio.com/docs/copilot/customization/prompt-files) (`.prompt.md`).
 
 ### Code Generation
-- `api-service-method.md` - HTTP services with error handling
-- `data-transformer.md` - Type-safe data transformations
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| API Service Method | [`api-service-method.prompt.md`](prompt-library/code-generation/api-service-method.prompt.md) | 94% |
+| API Service (Java) | [`api-service-method-java.prompt.md`](prompt-library/code-generation/api-service-method-java.prompt.md) | 93% |
+| Data Transformer | [`data-transformer.prompt.md`](prompt-library/code-generation/data-transformer.prompt.md) | 91% |
 
 ### Testing
-- `unit-test-suite.md` - Comprehensive test generation
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| Unit Test Suite | [`unit-test-suite.prompt.md`](prompt-library/testing/unit-test-suite.prompt.md) | 89% |
+| Unit Test (Java) | [`unit-test-suite-java.prompt.md`](prompt-library/testing/unit-test-suite-java.prompt.md) | 91% |
 
 ### Security
-- `input-validation.md` - OWASP-aligned validation
-- `auth-guard.md` - Route protection
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| Input Validation | [`input-validation.prompt.md`](prompt-library/security/input-validation.prompt.md) | 88% |
+| Input Validation (Java) | [`input-validation-java.prompt.md`](prompt-library/security/input-validation-java.prompt.md) | 90% |
+| Auth Guard | [`auth-guard.prompt.md`](prompt-library/security/auth-guard.prompt.md) | 92% |
 
 ### Refactoring
-- `extract-method.md` - Method extraction patterns
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| Extract Method | [`extract-method.prompt.md`](prompt-library/refactoring/extract-method.prompt.md) | 90% |
+| Parameter Object | [`introduce-parameter-object.prompt.md`](prompt-library/refactoring/introduce-parameter-object.prompt.md) | 88% |
+| Polymorphism | [`replace-conditional-with-polymorphism.prompt.md`](prompt-library/refactoring/replace-conditional-with-polymorphism.prompt.md) | 85% |
+| Simplify Expression | [`simplify-complex-expression.prompt.md`](prompt-library/refactoring/simplify-complex-expression.prompt.md) | 91% |
+| Review & Refactor | [`review-and-refactor.prompt.md`](prompt-library/refactoring/review-and-refactor.prompt.md) | 87% |
 
 ### Documentation
-- `jsdoc-generation.md` - JSDoc/Javadoc generation
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| JSDoc/Javadoc | [`jsdoc-generation.prompt.md`](prompt-library/documentation/jsdoc-generation.prompt.md) | 92% |
+| README Generator | [`readme-generator.prompt.md`](prompt-library/documentation/readme-generator.prompt.md) | 91% |
 
-All patterns support both TypeScript and Java with language-specific examples.
+### Workflow
+| Pattern | File | Success Rate |
+|---------|------|--------------|
+| Conventional Commit | [`conventional-commit.prompt.md`](prompt-library/workflow/conventional-commit.prompt.md) | 95% |
+| Implementation Plan | [`implementation-plan.prompt.md`](prompt-library/workflow/implementation-plan.prompt.md) | 88% |
+| Feature Breakdown | [`feature-breakdown.prompt.md`](prompt-library/workflow/feature-breakdown.prompt.md) | 90% |
 
-## For Instructors
+Full library documentation: [`prompt-library/README.md`](prompt-library/README.md)
 
-- **Instructor Guide:** `INSTRUCTOR_GUIDE.md` - Complete facilitation guide with timing
-- **Demo Script:** `DEMO_SCRIPT.md` - Live demonstration talking points
-- **Solutions:** Each lab has expert solutions for comparison
-
-### Workshop Flow
+## Workshop Flow
 
 1. **Hook (5 min):** Show bad vs expert prompt difference
 2. **CRAFT Introduction (10 min):** Teach the framework
@@ -170,19 +195,24 @@ All patterns support both TypeScript and Java with language-specific examples.
 
 ## Resources
 
-- **Participant Guide:** `02-prompt-engineering-participant-guide.md`
-- **CRAFT Framework:** `docs/craft-framework/guide.md`
-- **Prompt Library:** `prompt-library/`
-- **Copilot Modes:** `.github/copilot-chat/`
+- **CRAFT Framework:** [`docs/craft-framework/guide.md`](docs/craft-framework/guide.md)
+- **Prompt Library:** [`prompt-library/`](prompt-library/)
+- **Quality Rubric:** [`docs/rubrics/prompt-quality-rubric.md`](docs/rubrics/prompt-quality-rubric.md)
+- **Before/After Examples:** [`docs/examples/before-after.md`](docs/examples/before-after.md)
+- **Copilot Modes:** [`.github/copilot-chat/`](.github/copilot-chat/)
+- **VS Code Prompt Files:** [Official Documentation](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
 
 ## Contributing
 
 To add a new prompt pattern:
 
 1. Test it 5+ times with ≥80% success rate
-2. Use the template in `prompt-library/README.md`
-3. Include variables, examples, and common pitfalls
-4. Submit a PR to the appropriate category folder
+2. Use the official `.prompt.md` format with YAML frontmatter
+3. Include `agent`, `description`, `tools`, and `argument-hint`
+4. Add "Required Information" section and common pitfalls
+5. Submit a PR to the appropriate category folder
+
+See [`prompt-library/README.md`](prompt-library/README.md) for the complete format guide.
 
 ---
 
