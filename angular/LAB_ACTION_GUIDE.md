@@ -17,6 +17,16 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 - Use `#filename` to reference files as chat variables
 - Use Summarizer Hand-Off after each stage to track progress
 
+## Essential Guides
+
+| Guide | Use For | Location |
+|-------|---------|----------|
+| CRAFT Framework | Writing effective prompts | [`docs/craft-framework/guide.md`](../docs/craft-framework/guide.md) |
+| Iteration Guide | Improving prompts that don't work | [`docs/craft-framework/iteration-guide.md`](../docs/craft-framework/iteration-guide.md) |
+| Pattern Selector | Finding the right pattern | [`docs/pattern-selector.md`](../docs/pattern-selector.md) |
+| Variable Substitution | Filling in pattern variables | [`docs/variable-substitution-guide.md`](../docs/variable-substitution-guide.md) |
+| Contribution Rubric | Validating patterns for Lab 3 | [`docs/rubrics/pattern-contribution-rubric.md`](../docs/rubrics/pattern-contribution-rubric.md) |
+
 ---
 
 ## Stage 0 – Environment Setup
@@ -30,6 +40,8 @@ Follow these steps using GitHub Copilot Chat. After each stage, run Summarizer M
 ---
 
 ## Stage 1 – Crafting Effective Prompts with CRAFT
+
+> **Tip:** If your prompt doesn't produce 9/10 quality output on the first try, use the [Iteration Guide](../docs/craft-framework/iteration-guide.md) to diagnose and fix the gap.
 
 ### 1.1 Challenge 1: Login Function
 - Planning Mode: review `#challenge1-login.ts` and identify what makes the prompt "Create a login function" insufficient
@@ -196,6 +208,10 @@ Constraints: Maintain accuracy, handle edge cases (empty array, single item grou
 
 ## Stage 2 – Applying Library Patterns
 
+> **Tips:**
+> - Use the [Pattern Selector](../docs/pattern-selector.md) to find the right pattern for your task
+> - See the [Variable Substitution Guide](../docs/variable-substitution-guide.md) for how to fill in `[variables]`
+
 ### 2.1 Portfolio Service Pattern
 - Planning Mode: review `#portfolio-service.ts` and identify the issues (no caching, no retry, no error transformation)
 - Planning Mode: open the API service pattern from the prompt library and plan variable substitution:
@@ -234,6 +250,8 @@ Constraints: Maintain accuracy, handle edge cases (empty array, single item grou
 ---
 
 ## Stage 3 – Contributing to the Library
+
+> **Important:** Use the [Pattern Contribution Rubric](../docs/rubrics/pattern-contribution-rubric.md) to validate your pattern before submitting. It includes the test methodology, scoring criteria, and submission checklist.
 
 - Planning Mode: review `#contribution-template.ts` and identify a repeatable prompt pattern you discovered during Labs 1-2
 - Planning Mode: outline your pattern including:

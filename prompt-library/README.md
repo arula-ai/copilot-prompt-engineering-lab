@@ -164,10 +164,19 @@ Patterns require **5+ successful uses** before submission.
 
 ## Resources
 
+### Using Patterns
+- [Pattern Selector](../docs/pattern-selector.md) - Find the right pattern for your task
+- [Variable Substitution Guide](../docs/variable-substitution-guide.md) - How to fill in `[variables]`
+- [CRAFT Framework Guide](../docs/craft-framework/guide.md) - The prompting framework
+- [Iteration Guide](../docs/craft-framework/iteration-guide.md) - Improve prompts that don't work
+
+### Contributing Patterns
+- [Pattern Contribution Rubric](../docs/rubrics/pattern-contribution-rubric.md) - Validation criteria
+
+### External References
 - [VS Code Prompt Files Documentation](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
 - [GitHub Awesome Copilot Prompts](https://github.com/github/awesome-copilot/tree/main/prompts)
 - [Conventional Commits Specification](https://www.conventionalcommits.org/)
-- [CRAFT Framework Guide](../docs/craft-framework/guide.md)
 
 ## Legacy Files
 

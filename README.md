@@ -120,9 +120,15 @@ copilot-prompt-engineering-lab/
 │       └── hand-off.chatmode.md     # Progress summarizer mode
 │
 ├── docs/
-│   ├── craft-framework/guide.md     # Complete CRAFT framework guide
+│   ├── craft-framework/
+│   │   ├── guide.md                 # Complete CRAFT framework guide
+│   │   └── iteration-guide.md       # How to improve prompts iteratively
+│   ├── pattern-selector.md          # Decision tree for choosing patterns
+│   ├── variable-substitution-guide.md # How to fill in pattern variables
 │   ├── workflow-tracker.md          # Progress tracking template
 │   ├── rubrics/                     # Quality assessment rubrics
+│   │   ├── prompt-quality-rubric.md
+│   │   └── pattern-contribution-rubric.md  # Lab 3 validation
 │   └── examples/                    # Before/after prompt examples
 │
 └── README.md                        # This file
@@ -195,10 +201,21 @@ Full library documentation: [`prompt-library/README.md`](prompt-library/README.m
 
 ## Resources
 
+### Core Guides
 - **CRAFT Framework:** [`docs/craft-framework/guide.md`](docs/craft-framework/guide.md)
+- **Iteration Guide:** [`docs/craft-framework/iteration-guide.md`](docs/craft-framework/iteration-guide.md) - How to improve prompts that don't work
+- **Pattern Selector:** [`docs/pattern-selector.md`](docs/pattern-selector.md) - Find the right pattern for your task
+- **Variable Substitution:** [`docs/variable-substitution-guide.md`](docs/variable-substitution-guide.md) - How to fill in pattern variables
+
+### Library & Patterns
 - **Prompt Library:** [`prompt-library/`](prompt-library/)
-- **Quality Rubric:** [`docs/rubrics/prompt-quality-rubric.md`](docs/rubrics/prompt-quality-rubric.md)
 - **Before/After Examples:** [`docs/examples/before-after.md`](docs/examples/before-after.md)
+
+### Validation & Quality
+- **Quality Rubric:** [`docs/rubrics/prompt-quality-rubric.md`](docs/rubrics/prompt-quality-rubric.md)
+- **Contribution Rubric:** [`docs/rubrics/pattern-contribution-rubric.md`](docs/rubrics/pattern-contribution-rubric.md) - For Lab 3
+
+### Reference
 - **Copilot Modes:** [`.github/copilot-chat/`](.github/copilot-chat/)
 - **VS Code Prompt Files:** [Official Documentation](https://code.visualstudio.com/docs/copilot/customization/prompt-files)
 
